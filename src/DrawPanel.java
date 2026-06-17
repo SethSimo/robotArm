@@ -37,19 +37,23 @@ class DrawPanel extends JPanel implements MouseListener {
             {
                 findOpitmalAngleXstartYend(target, x, y);
                 findOpitmalAngleXstartYend(target, y, z);
-                if (z.anglePlus(target)) {
-                    while (!z.angleMin(target)) {
-                        z.setAngle(z.getAngle() + 0.0001);
-                    }
-                } else if (z.angleMin(target)) {
-                    while (!z.anglePlus(target)) {
-                        z.setAngle(z.getAngle() - 0.0001);
-                    }
-                }
+                findOptimalAngleEnd(target, z);
             }
         }
         y.setStartPos(x.end());
         z.setStartPos(y.end());
+    }
+
+    private void findOptimalAngleEnd(double[] target, Link z) {
+        if (z.anglePlus(target)) {
+            while (!z.angleMin(target)) {
+                z.setAngle(z.getAngle() + 0.0001);
+            }
+        } else if (z.angleMin(target)) {
+            while (!z.anglePlus(target)) {
+                z.setAngle(z.getAngle() - 0.0001);
+            }
+        }
     }
 
     private void findOpitmalAngleXstartYend(double[] target, Link x, Link y) {
