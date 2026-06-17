@@ -2,10 +2,8 @@ import java.awt.*;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
-import java.util.ArrayList;
 
 class DrawPanel extends JPanel implements MouseListener {
-   private double[] target;
     private Link x,y,z;
 
 
@@ -34,27 +32,11 @@ class DrawPanel extends JPanel implements MouseListener {
     }
 
     public void mousePressed(MouseEvent e) {
-       target = new double[]{getMousePosition().x, getMousePosition().y};
+        double[] target = new double[]{getMousePosition().x, getMousePosition().y};
         for (int i = 0; i <10; i++) {
             {
-                if (x.anglePlus(target, y)) {
-                    while (!x.angleMin(target, y)) {
-                        x.setAngle(x.getAngle() + 0.0001);
-                    }
-                } else if (x.angleMin(target, y)) {
-                    while (!x.anglePlus(target, y)) {
-                        x.setAngle(x.getAngle() - 0.0001);
-                    }
-                }
-                if (y.anglePlus(target,z)) {
-                    while (!y.angleMin(target,z)) {
-                        y.setAngle(y.getAngle() + 0.0001);
-                    }
-                } else if (y.angleMin(target,z)) {
-                    while (!y.anglePlus(target,z)) {
-                        y.setAngle(y.getAngle() - 0.0001);
-                    }
-                }
+                findOpitmalAngleXstartYend(target, x, y);
+                findOpitmalAngleXstartYend(target, y, z);
                 if (z.anglePlus(target)) {
                     while (!z.angleMin(target)) {
                         z.setAngle(z.getAngle() + 0.0001);
@@ -68,6 +50,18 @@ class DrawPanel extends JPanel implements MouseListener {
         }
         y.setStartPos(x.end());
         z.setStartPos(y.end());
+    }
+
+    private void findOpitmalAngleXstartYend(double[] target, Link x, Link y) {
+        if (x.anglePlus(target, y)) {
+            while (!x.angleMin(target, y)) {
+                x.setAngle(x.getAngle() + 0.0001);
+            }
+        } else if (x.angleMin(target, y)) {
+            while (!x.anglePlus(target, y)) {
+                x.setAngle(x.getAngle() - 0.0001);
+            }
+        }
     }
 
     public void mouseReleased(MouseEvent e) { }
