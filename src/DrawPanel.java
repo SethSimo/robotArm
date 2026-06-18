@@ -5,11 +5,12 @@ import javax.swing.JPanel;
 
 class DrawPanel extends JPanel implements MouseListener {
     private Link x,y,z;
+    private double[] start;
 
 
     public DrawPanel() {
         double[] target = {3,4};
-        double[] start = {430,250};
+         start = new double[]{430,250};
 
         this.x = new Link(start,0,100);
         this.y = new Link(x.end(),0,100);
@@ -26,7 +27,7 @@ class DrawPanel extends JPanel implements MouseListener {
         g2.setFont(new Font("Times New Roman", Font.BOLD, 15));
 
 
-        if(x != null) g.drawString("Base Angle: " + Math.round((-1*x.getAngle()/Math.PI%2)*1000)/1000.0 + " π", 50, 150);
+        if(x != null) g.drawString("Link 1 Angle: " + Math.round((-1*x.getAngle()/Math.PI%2)*1000)/1000.0 + " π", 50, 150);
         if (y != null && x != null) g.drawString("Link 2 Angle: " + Math.round((-1*(y.getAngle() - x.getAngle())/Math.PI%2)*1000)/1000.0 + " π", 50, 180);
         if (z != null && y != null) g.drawString("Link 3 Angle: " + Math.round((-1*(z.getAngle() - y.getAngle())/Math.PI%2)*1000)/1000.0 + " π", 50, 210);
 
@@ -51,7 +52,7 @@ class DrawPanel extends JPanel implements MouseListener {
                 0
         ));
 
-        g2.drawOval(210,30, 440, 440);
+        g2.drawOval((int) (start[0]-(x.getLength()+y.getLength()+z.getLength())),(int) (start[1]-(x.getLength()+y.getLength()+z.getLength())), (int) (2*(x.getLength()+y.getLength()+z.getLength())), (int) (2*(x.getLength()+y.getLength()+z.getLength())));
     }
 
     public void mousePressed(MouseEvent e) {
